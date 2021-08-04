@@ -1,0 +1,15 @@
+{
+  "appSetName": "wooduan",
+  "applications": [
+    {
+      "appName": "SSJJ2",
+      "artifacts": [
+        {
+          "groupId": "hall_server",
+          "artifactId": "old",
+          "version": "0.0.0"
+        }
+      ]
+    }
+  ]
+}

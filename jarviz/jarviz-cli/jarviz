@@ -1,0 +1,52 @@
+#!/bin/sh
+
+#####################################################################
+# Copyright 2020 Expedia, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#####################################################################
+
+# jarviz.sh - Jarviz CLI tool to generate dependency analytics for Java apps.
+JARVIZ_CLI_HOME="$(cd "$(dirname "$0")"; pwd)"
+JARVIZ_HOME="$(cd "$(dirname "$0")"; pwd)/source"
+JARVIZ_JAR_FILE="jarviz.jar"
+JARVIZ_JAR_PATH="${JARVIZ_HOME}/${JARVIZ_JAR_FILE}"
+JARVIZ_CONFIG_PATH="${JARVIZ_HOME}/config.json"
+
+# --- Run Commands ----
+JARVIZ_TIMESTAMP=$(date "+%Y%m%d-%H%M%S")
+JARVIZ_OUT_FILE_FORMAT="output"
+# Create temp directory
+JARVIZ_TEMP_DIR=$(mktemp -d -t "jarviz-temp-${JARVIZ_TIMESTAMP}-XXXX")
+JARVIZ_TEMP_JSONL="${JARVIZ_TEMP_DIR}/${JARVIZ_OUT_FILE_FORMAT}.jsonl"
+# Actual output files
+JARVIZ_OUT_DIR="result"
+JARVIZ_OUT_JSONL="${JARVIZ_OUT_DIR}/${1}.jsonl"
+
+
+sed -i  's#\("artifactDirectory": "\).*#\1'"${JARVIZ_CLI_HOME}/input_jar"'",#g' source/config.json
+# Step 1: Run Jarviz java artifact to generate dependency matrix (in .jsonl format)
+echo "Java: Running ${JARVIZ_JAR_PATH}"
+
+if java -cp "${JARVIZ_JAR_PATH}" "com.vrbo.jarviz.AnalyzeCommand" "$@" -c "${JARVIZ_CONFIG_PATH}" -o "${JARVIZ_TEMP_JSONL}" ; then
+    # Copy the files to actual output directory
+    if [ -f "${JARVIZ_TEMP_JSONL}" ] ; then
+        if [ ! -d "${JARVIZ_OUT_DIR}" ] ; then 
+            mkdir "${JARVIZ_OUT_DIR}"
+        fi
+        cp "${JARVIZ_TEMP_JSONL}" "${JARVIZ_OUT_JSONL}"
+    fi
+fi
+
+# Remove temp directory
+rm -rf "${JARVIZ_TEMP_DIR}"

@@ -1,0 +1,7 @@
+{
+  "include": {
+  },
+  "exclude": {
+    "sourcePackage": "not_required"
+  }
+}

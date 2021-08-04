@@ -1,0 +1,5 @@
+{
+  "artifactDirectory": "/tmp/",
+  "mavenTimeOutSeconds": 300,
+  "continueOnMavenError": false
+}

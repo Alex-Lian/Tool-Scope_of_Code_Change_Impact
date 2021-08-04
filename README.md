@@ -8,8 +8,8 @@ util for version compare
 5. input.txt        (file)       defined first layer input
 
 ## Environment Requirement
-python3, java, maven
-python包: jsonlines, PyQt5
+python3, java, maven                    
+python package: jsonlines, PyQt5
 
 ## How To Use It
 1. put the old and new jar files to `jarviz/jarviz-cli/input-jar` and rename them to `new-0.0.0.jar`, `old-0.0.0.jar`

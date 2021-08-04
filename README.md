@@ -1,18 +1,18 @@
-# 无端科技 版本修改可视化工具
+util for version compare
 
-## 文件结构
-1. jarviz           (文件夹)     生成method调用关系
-2. JsonTreeView     (文件夹)     生成可视化界面
-3. run.sh           (执行脚本)
-4. jsonl_to_json.py (python脚本) 文件格式转换
-5. input.txt        (文档)       业务入口的输入
+## file structure
+1. jarviz           (folder)     get the method dependency
+2. JsonTreeView     (folder)     generate the version interface
+3. run.sh           (shell script)
+4. jsonl_to_json.py (python script) change the form of the file 
+5. input.txt        (file)       defined first layer input
 
-## 环境要求
+## environment requirement
 python3, java, maven
 python包: jsonlines, PyQt5
 
-## 使用流程
-1. 把新旧两个版本的jar包 放入 `jarviz/jarviz-cli/input-jar` 中， 并分别命名为 `new-0.0.0.jar` 和 `old-0.0.0.jar`
-2. 将需要的业务入口方法名填入 `input.txt` 
-3. 执行脚本 `sh run.sh`
+## how to use it
+1. put the old and new jar files to `jarviz/jarviz-cli/input-jar` and rename them to `new-0.0.0.jar`, `old-0.0.0.jar`
+2. define the first layer input and put them to `input.txt` 
+3. run `sh run.sh`
 
